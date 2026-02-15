@@ -43,7 +43,6 @@
       font-family: 'Playfair Display', serif;
     }
 
-    /* Background Canvas */
     #bg-canvas {
       position: fixed;
       top: 0;
@@ -54,7 +53,6 @@
       pointer-events: none;
     }
 
-    /* Gradient Orbs */
     .orb {
       position: fixed;
       border-radius: 50%;
@@ -87,13 +85,11 @@
       50% { transform: translate(30px, -30px) scale(1.1); }
     }
 
-    /* Main Content */
     .main-content {
       position: relative;
       z-index: 10;
     }
 
-    /* Hero Section */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -104,7 +100,6 @@
       text-align: center;
     }
 
-    /* Photo Frame */
     .photo-frame {
       position: relative;
       margin-bottom: 3rem;
@@ -153,7 +148,6 @@
       z-index: 1;
     }
 
-    /* Floating Hearts around photo */
     .floating-heart {
       position: absolute;
       animation: float-heart 3s ease-in-out infinite;
@@ -164,7 +158,6 @@
       50% { transform: translateY(-15px) rotate(10deg); }
     }
 
-    /* Text Animations */
     .hero-title {
       font-size: clamp(2.5rem, 8vw, 4.5rem);
       font-weight: 700;
@@ -192,7 +185,6 @@
       }
     }
 
-    /* Animated Words */
     .word-container {
       display: flex;
       flex-wrap: wrap;
@@ -221,7 +213,6 @@
       }
     }
 
-    /* CTA Button */
     .cta-btn {
       position: relative;
       display: inline-flex;
@@ -271,7 +262,6 @@
       transform: translateX(5px);
     }
 
-    /* Letter Section */
     .letter-section {
       padding: 6rem 2rem;
       display: flex;
@@ -324,7 +314,6 @@
       margin-top: 2rem;
     }
 
-    /* Reasons Section */
     .reasons-section {
       padding: 4rem 2rem 8rem;
     }
@@ -383,7 +372,6 @@
       line-height: 1.6;
     }
 
-    /* Final Section */
     .final-section {
       padding: 4rem 2rem;
       text-align: center;
@@ -414,7 +402,6 @@
       color: var(--muted);
     }
 
-    /* Footer */
     .footer {
       text-align: center;
       padding: 2rem;
@@ -423,7 +410,6 @@
       border-top: 1px solid var(--border);
     }
 
-    /* Reduced Motion */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         animation-duration: 0.01ms !important;
@@ -432,7 +418,6 @@
       }
     }
 
-    /* Mobile adjustments */
     @media (max-width: 640px) {
       .photo-frame img {
         width: 220px;
@@ -450,21 +435,16 @@
   </style>
 </head>
 <body>
-  <!-- Background Canvas -->
   <canvas id="bg-canvas"></canvas>
 
-  <!-- Gradient Orbs -->
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
 
-  <!-- Main Content -->
   <main class="main-content">
-    <!-- Hero Section -->
     <section class="hero">
       <div class="photo-frame">
         <img src="https://i.ibb.co.com/VYs2vFwd/IMG-20250615-002543-991.webp" alt="My Valentine">
         
-        <!-- Floating Hearts -->
         <svg class="floating-heart" style="top: -20px; left: -30px; animation-delay: 0s;" width="24" height="24" viewBox="0 0 24 24" fill="#e54b4b">
           <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
         </svg>
@@ -481,7 +461,7 @@
       <h1 class="hero-title font-display">Selamat Hari Valentine</h1>
       <p class="hero-subtitle">Setiap detik bersamamu adalah hadiah terindah yang pernah aku terima. Kamu adalah alasan di balik semua senyumku.</p>
 
-      <button class="cta-btn" onclick="scrollToLetter()">
+      <button class="cta-btn" id="ctaButton">
         <span>Baca Surat Cinta</span>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -489,9 +469,8 @@
       </button>
     </section>
 
-    <!-- Letter Section -->
     <section class="letter-section" id="letterSection">
-      <div class="letter-card">
+      <div class="letter-card" id="letterCard">
         <div class="letter-header">
           <h2 class="letter-title font-display">Surat Untukmu</h2>
           <svg width="40" height="40" viewBox="0 0 24 24" fill="#e54b4b">
@@ -511,13 +490,11 @@
       </div>
     </section>
 
-    <!-- Reasons Section -->
     <section class="reasons-section">
       <h2 class="reasons-title font-display">Alasan Aku Mencintaimu</h2>
       <div class="reasons-grid" id="reasonsGrid"></div>
     </section>
 
-    <!-- Final Section -->
     <section class="final-section">
       <svg class="big-heart" viewBox="0 0 24 24" fill="#e54b4b">
         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
@@ -526,16 +503,16 @@
       <p class="final-subtext">Happy Valentine's Day, my love</p>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
       Dibuat dengan sepenuh hati untukmu
     </footer>
   </main>
 
   <script>
-    // Data
-    const words = ['Cantik', 'Pintar', 'Menyenangkan', 'Sempurna', 'Berharga'];
-    const reasons = [
+    // ========== DATA ==========
+    var words = ['Cantik', 'Pintar', 'Menyenangkan', 'Sempurna', 'Berharga'];
+    
+    var reasons = [
       { icon: 'heart', text: 'Kamu selalu bisa membuatku tersenyum bahkan di hari-hari terburukku.' },
       { icon: 'star', text: 'Kamu adalah inspirasi terbesarku untuk menjadi pribadi yang lebih baik.' },
       { icon: 'sun', text: 'Senyumanmu adalah obat untuk semua kelelahanku.' },
@@ -544,7 +521,7 @@
       { icon: 'flower', text: 'Cintamu memberikanku kekuatan untuk menghadapi semua tantangan.' }
     ];
 
-    const icons = {
+    var icons = {
       heart: '<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>',
       star: '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>',
       sun: '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>',
@@ -553,123 +530,138 @@
       flower: '<circle cx="12" cy="12" r="3"/><circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="7.76" cy="7.76" r="2"/><circle cx="16.24" cy="16.24" r="2"/><circle cx="7.76" cy="16.24" r="2"/><circle cx="16.24" cy="7.76" r="2"/>'
     };
 
-    // Initialize animated words
-    const wordContainer = document.getElementById('wordContainer');
-    words.forEach((word, index) => {
-      const span = document.createElement('span');
-      span.className = 'animated-word';
-      span.textContent = word;
-      span.style.animationDelay = `${1 + index * 0.15}s`;
-      wordContainer.appendChild(span);
-    });
-
-    // Initialize reason cards
-    const reasonsGrid = document.getElementById('reasonsGrid');
-    reasons.forEach((reason, index) => {
-      const card = document.createElement('div');
-      card.className = 'reason-card';
-      card.innerHTML = `
-        <div class="reason-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="white" stroke="${icons[reason.icon].includes('line') ? 'white' : 'none'}" stroke-width="2">
-            ${icons[reason.icon]}
-          </svg>
-        </div>
-        <p class="reason-text">${reason.text}</p>
-      `;
-      card.style.transitionDelay = `${index * 0.1}s`;
-      reasonsGrid.appendChild(card);
-    });
-
-    // Scroll to letter
+    // ========== SCROLL FUNCTION ==========
     function scrollToLetter() {
-      document.getElementById('letterSection').scrollIntoView({ behavior: 'smooth' });
+      var letterSection = document.getElementById('letterSection');
+      if (letterSection) {
+        var targetPosition = letterSection.offsetTop - 20;
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
     }
 
-    // Intersection Observer for scroll animations
-    const observerOptions = {
-      threshold: 0.2,
-      rootMargin: '0px 0px -50px 0px'
-    };
+    // ========== INITIALIZE ELEMENTS ==========
+    function initWords() {
+      var wordContainer = document.getElementById('wordContainer');
+      if (!wordContainer) return;
+      
+      for (var i = 0; i < words.length; i++) {
+        var span = document.createElement('span');
+        span.className = 'animated-word';
+        span.textContent = words[i];
+        span.style.animationDelay = (1 + i * 0.15) + 's';
+        wordContainer.appendChild(span);
+      }
+    }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+    function initReasons() {
+      var reasonsGrid = document.getElementById('reasonsGrid');
+      if (!reasonsGrid) return;
+      
+      for (var i = 0; i < reasons.length; i++) {
+        var card = document.createElement('div');
+        card.className = 'reason-card';
+        card.innerHTML = 
+          '<div class="reason-icon">' +
+            '<svg width="24" height="24" viewBox="0 0 24 24" fill="white" stroke="' + (icons[reasons[i].icon].indexOf('line') !== -1 ? 'white' : 'none') + '" stroke-width="2">' +
+              icons[reasons[i].icon] +
+            '</svg>' +
+          '</div>' +
+          '<p class="reason-text">' + reasons[i].text + '</p>';
+        card.style.transitionDelay = (i * 0.1) + 's';
+        reasonsGrid.appendChild(card);
+      }
+    }
+
+    // ========== OBSERVER ==========
+    function initObserver() {
+      var observerOptions = {
+        threshold: 0.2,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      var observer = new IntersectionObserver(function(entries) {
+        for (var i = 0; i < entries.length; i++) {
+          if (entries[i].isIntersecting) {
+            entries[i].target.classList.add('visible');
+          }
         }
-      });
-    }, observerOptions);
+      }, observerOptions);
 
-    // Observe letter card
-    const letterCard = document.querySelector('.letter-card');
-    if (letterCard) {
-      observer.observe(letterCard);
+      var letterCard = document.getElementById('letterCard');
+      if (letterCard) {
+        observer.observe(letterCard);
+      }
+
+      var reasonCards = document.querySelectorAll('.reason-card');
+      for (var j = 0; j < reasonCards.length; j++) {
+        observer.observe(reasonCards[j]);
+      }
     }
 
-    // Observe reason cards
-    document.querySelectorAll('.reason-card').forEach(card => {
-      observer.observe(card);
-    });
-
-    // Background Particle System
-    const canvas = document.getElementById('bg-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    let animationId = null;
+    // ========== PARTICLE SYSTEM ==========
+    var canvas = null;
+    var ctx = null;
+    var particles = [];
+    var animationId = null;
 
     function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-
-    class Particle {
-      constructor() {
-        this.reset();
-      }
-
-      reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 3 + 1;
-        this.speedX = (Math.random() - 0.5) * 0.5;
-        this.speedY = (Math.random() - 0.5) * 0.5;
-        this.opacity = Math.random() * 0.5 + 0.1;
-        this.color = Math.random() > 0.5 ? '#e54b4b' : '#d4a574';
-      }
-
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-
-        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-      }
-
-      draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, Math.max(0.5, this.size), 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.globalAlpha = this.opacity;
-        ctx.fill();
-        ctx.globalAlpha = 1;
+      if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
       }
     }
+
+    function Particle() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 3 + 1;
+      this.speedX = (Math.random() - 0.5) * 0.5;
+      this.speedY = (Math.random() - 0.5) * 0.5;
+      this.opacity = Math.random() * 0.5 + 0.1;
+      this.color = Math.random() > 0.5 ? '#e54b4b' : '#d4a574';
+    }
+
+    Particle.prototype.update = function() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+
+      if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+      if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+    };
+
+    Particle.prototype.draw = function() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, Math.max(0.5, this.size), 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.globalAlpha = this.opacity;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    };
 
     function initParticles() {
       particles = [];
-      const particleCount = Math.min(80, Math.floor((canvas.width * canvas.height) / 15000));
-      for (let i = 0; i < particleCount; i++) {
+      var particleCount = Math.min(80, Math.floor((canvas.width * canvas.height) / 15000));
+      for (var i = 0; i < particleCount; i++) {
         particles.push(new Particle());
       }
     }
 
     function drawHearts() {
-      const heartCount = 15;
-      for (let i = 0; i < heartCount; i++) {
-        const x = Math.random() * canvas.width;
-        const y = Math.random() * canvas.height;
-        const size = Math.random() * 8 + 4;
-        const opacity = Math.random() * 0.15 + 0.05;
+      var heartCount = 15;
+      for (var i = 0; i < heartCount; i++) {
+        var x = Math.random() * canvas.width;
+        var y = Math.random() * canvas.height;
+        var size = Math.random() * 8 + 4;
+        var opacity = Math.random() * 0.15 + 0.05;
 
         ctx.save();
         ctx.translate(x, y);
-        ctx.scale(siz
+        ctx.scale(size / 12, size / 12);
+        ctx.fillStyle = i % 2 === 0 ? '#e54b4b' : '#d4a574';
+        ctx.globalAlpha = opacity;
+        ctx.beginPath();
+        ctx.moveTo(0, -4);
+  
