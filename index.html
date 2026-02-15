@@ -664,4 +664,95 @@
         ctx.globalAlpha = opacity;
         ctx.beginPath();
         ctx.moveTo(0, -4);
-  
+        ctx.bezierCurveTo(-8, -12, -16, -4, -16, 4);
+        ctx.bezierCurveTo(-16, 12, -8, 16, 0, 24);
+        ctx.bezierCurveTo(8, 16, 16, 12, 16, 4);
+        ctx.bezierCurveTo(16, -4, 8, -12, 0, -4);
+        ctx.fill();
+        ctx.restore();
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      drawHearts();
+      
+      for (var i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
+
+      animationId = requestAnimationFrame(animate);
+    }
+
+    // ========== CLICK EFFECT ==========
+    function handleClick(e) {
+      for (var i = 0; i < 5; i++) {
+        var heart = document.createElement('div');
+        var heartColor = Math.random() > 0.5 ? '#e54b4b' : '#d4a574';
+        heart.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="' + heartColor + '"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+        heart.style.cssText = 'position: fixed; left: ' + e.clientX + 'px; top: ' + e.clientY + 'px; pointer-events: none; z-index: 9999;';
+        document.body.appendChild(heart);
+
+        var angle = (i / 5) * Math.PI * 2;
+        var distance = 50 + Math.random() * 30;
+        var tx = Math.cos(angle) * distance;
+        var ty = Math.sin(angle) * distance - 50;
+
+        heart.animate([
+          { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+          { transform: 'translate(' + tx + 'px, ' + ty + 'px) scale(0)', opacity: 0 }
+        ], {
+          duration: 800,
+          easing: 'ease-out'
+        }).onfinish = function() {
+          if (this && this.element) {
+            this.element.remove();
+          }
+        }.bind({ element: heart });
+      }
+    }
+
+    // ========== INIT ON DOM READY ==========
+    document.addEventListener('DOMContentLoaded', function() {
+      // Init words and reasons
+      initWords();
+      initReasons();
+      initObserver();
+
+      // CTA Button click
+      var ctaButton = document.getElementById('ctaButton');
+      if (ctaButton) {
+        ctaButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          scrollToLetter();
+        });
+      }
+
+      // Check reduced motion
+      var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!prefersReducedMotion) {
+        // Init canvas
+        canvas = document.getElementById('bg-canvas');
+        if (canvas) {
+          ctx = canvas.getContext('2d');
+          resizeCanvas();
+          initParticles();
+          animate();
+
+          window.addEventListener('resize', function() {
+            resizeCanvas();
+            initParticles();
+          });
+        }
+
+        // Click effect
+        document.addEventListener('click', handleClick);
+      }
+    });
+  </script>
+</body>
+</html>
