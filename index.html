@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Untukmu yang Spesial</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0a0b;
+      --bg-soft: #1a1517;
+      --fg: #fef9f3;
+      --muted: #a89f9a;
+      --accent: #e54b4b;
+      --accent-soft: #ff7b7b;
+      --gold: #d4a574;
+      --card: rgba(26, 21, 23, 0.8);
+      --border: rgba(212, 165, 116, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    .font-display {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Background Canvas */
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Gradient Orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .orb-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+      top: -200px;
+      right: -200px;
+      animation: float-orb 15s ease-in-out infinite;
+    }
+
+    .orb-2 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+      bottom: -100px;
+      left: -100px;
+      animation: float-orb 20s ease-in-out infinite reverse;
+    }
+
+    @keyframes float-orb {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(30px, -30px) scale(1.1); }
+    }
+
+    /* Main Content */
+    .main-content {
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* Photo Frame */
+    .photo-frame {
+      position: relative;
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: scale(0.8);
+      animation: reveal-photo 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    }
+
+    @keyframes reveal-photo {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .photo-frame::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      background: linear-gradient(135deg, var(--gold), var(--accent), var(--gold));
+      border-radius: 24px;
+      z-index: -1;
+      animation: rotate-border 4s linear infinite;
+    }
+
+    @keyframes rotate-border {
+      to { transform: rotate(360deg); }
+    }
+
+    .photo-frame::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--bg);
+      border-radius: 20px;
+      z-index: -1;
+    }
+
+    .photo-frame img {
+      width: 280px;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 20px;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Floating Hearts around photo */
+    .floating-heart {
+      position: absolute;
+      animation: float-heart 3s ease-in-out infinite;
+    }
+
+    @keyframes float-heart {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(10deg); }
+    }
+
+    /* Text Animations */
+    .hero-title {
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fade-up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 3vw, 1.25rem);
+      color: var(--muted);
+      max-width: 500px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fade-up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+    }
+
+    @keyframes fade-up {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Animated Words */
+    .word-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      min-height: 60px;
+    }
+
+    .animated-word {
+      display: inline-block;
+      padding: 0.5rem 1.25rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      opacity: 0;
+      transform: scale(0);
+      animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes pop-in {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* CTA Button */
+    .cta-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2.5rem;
+      background: transparent;
+      border: 2px solid var(--gold);
+      color: var(--fg);
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 60px;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fade-up 1s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards;
+    }
+
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent), var(--gold));
+      opacity: 0;
+      transition: opacity 0.4s;
+      z-index: -1;
+    }
+
+    .cta-btn:hover::before {
+      opacity: 1;
+    }
+
+    .cta-btn:hover {
+      border-color: transparent;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(229, 75, 75, 0.3);
+    }
+
+    .cta-btn svg {
+      transition: transform 0.3s;
+    }
+
+    .cta-btn:hover svg {
+      transform: translateX(5px);
+    }
+
+    /* Letter Section */
+    .letter-section {
+      padding: 6rem 2rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .letter-card {
+      max-width: 600px;
+      background: var(--card);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 3rem;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .letter-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .letter-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .letter-title {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      color: var(--gold);
+    }
+
+    .letter-content {
+      line-height: 1.9;
+      color: var(--fg);
+      font-size: 1.05rem;
+    }
+
+    .letter-content p {
+      margin-bottom: 1.5rem;
+    }
+
+    .signature {
+      text-align: right;
+      font-style: italic;
+      color: var(--accent-soft);
+      font-size: 1.1rem;
+      margin-top: 2rem;
+    }
+
+    /* Reasons Section */
+    .reasons-section {
+      padding: 4rem 2rem 8rem;
+    }
+
+    .reasons-title {
+      text-align: center;
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      margin-bottom: 3rem;
+      color: var(--gold);
+    }
+
+    .reasons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .reason-card {
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reason-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reason-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+      box-shadow: 0 10px 30px rgba(229, 75, 75, 0.15);
+    }
+
+    .reason-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .reason-text {
+      color: var(--fg);
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    /* Final Section */
+    .final-section {
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .big-heart {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 2rem;
+      animation: heartbeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      15% { transform: scale(1.15); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.1); }
+      60% { transform: scale(1); }
+    }
+
+    .final-text {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      color: var(--fg);
+      margin-bottom: 1rem;
+    }
+
+    .final-subtext {
+      color: var(--muted);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.875rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 640px) {
+      .photo-frame img {
+        width: 220px;
+        height: 280px;
+      }
+
+      .letter-card {
+        padding: 2rem 1.5rem;
+      }
+
+      .orb {
+        opacity: 0.2;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Gradient Orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="photo-frame">
+        <img src="https://i.ibb.co.com/VYs2vFwd/IMG-20250615-002543-991.webp" alt="My Valentine">
+        
+        <!-- Floating Hearts -->
+        <svg class="floating-heart" style="top: -20px; left: -30px; animation-delay: 0s;" width="24" height="24" viewBox="0 0 24 24" fill="#e54b4b">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        <svg class="floating-heart" style="top: 50%; right: -35px; animation-delay: 0.5s;" width="20" height="20" viewBox="0 0 24 24" fill="#d4a574">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        <svg class="floating-heart" style="bottom: -15px; left: 20%; animation-delay: 1s;" width="18" height="18" viewBox="0 0 24 24" fill="#ff7b7b">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+      </div>
+
+      <div class="word-container" id="wordContainer"></div>
+
+      <h1 class="hero-title font-display">Selamat Hari Valentine</h1>
+      <p class="hero-subtitle">Setiap detik bersamamu adalah hadiah terindah yang pernah aku terima. Kamu adalah alasan di balik semua senyumku.</p>
+
+      <button class="cta-btn" onclick="scrollToLetter()">
+        <span>Baca Surat Cinta</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </section>
+
+    <!-- Letter Section -->
+    <section class="letter-section" id="letterSection">
+      <div class="letter-card">
+        <div class="letter-header">
+          <h2 class="letter-title font-display">Surat Untukmu</h2>
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="#e54b4b">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </div>
+        <div class="letter-content">
+          <p>Hai sayang,</p>
+          <p>Dalam setiap langkah yang kita lalui bersama, aku selalu merasa bersyukur bisa memiliki seseorang sepertimu di hidupku. Kamu adalah warna dalam hidupku yang membuat segalanya terasa lebih bermakna.</p>
+          <p>Terima kasih sudah menjadi bagian dari hidupku. Terima kasih untuk setiap tawa, setiap pelukan hangat, dan setiap momen indah yang kita lalui bersama. Aku berharap kita bisa terus bersama dalam setiap babak kehidupan ini.</p>
+          <p>Di hari Valentine ini, aku ingin mengingatkanmu betapa berharganya dirimu bagiku. Kamu adalah rumah yang selalu aku rindukan.</p>
+        </div>
+        <div class="signature">
+          Dengan segenap cinta,<br>
+          ~ Aku yang mencintaimu
+        </div>
+      </div>
+    </section>
+
+    <!-- Reasons Section -->
+    <section class="reasons-section">
+      <h2 class="reasons-title font-display">Alasan Aku Mencintaimu</h2>
+      <div class="reasons-grid" id="reasonsGrid"></div>
+    </section>
+
+    <!-- Final Section -->
+    <section class="final-section">
+      <svg class="big-heart" viewBox="0 0 24 24" fill="#e54b4b">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+      </svg>
+      <p class="final-text font-display">Aku mencintaimu, selamanya</p>
+      <p class="final-subtext">Happy Valentine's Day, my love</p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      Dibuat dengan sepenuh hati untukmu
+    </footer>
+  </main>
+
+  <script>
+    // Data
+    const words = ['Cantik', 'Pintar', 'Menyenangkan', 'Sempurna', 'Berharga'];
+    const reasons = [
+      { icon: 'heart', text: 'Kamu selalu bisa membuatku tersenyum bahkan di hari-hari terburukku.' },
+      { icon: 'star', text: 'Kamu adalah inspirasi terbesarku untuk menjadi pribadi yang lebih baik.' },
+      { icon: 'sun', text: 'Senyumanmu adalah obat untuk semua kelelahanku.' },
+      { icon: 'moon', text: 'Bersamamu, setiap momen terasa berharga dan tak terlupakan.' },
+      { icon: 'sparkle', text: 'Kamu menerima aku apa adanya, dengan semua kelebihan dan kekuranganku.' },
+      { icon: 'flower', text: 'Cintamu memberikanku kekuatan untuk menghadapi semua tantangan.' }
+    ];
+
+    const icons = {
+      heart: '<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>',
+      star: '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>',
+      sun: '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>',
+      moon: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',
+      sparkle: '<path d="M12 2L13.09 8.26L20 9L13.09 15.74L12 22L10.91 15.74L4 15L10.91 8.26L12 2Z"/>',
+      flower: '<circle cx="12" cy="12" r="3"/><circle cx="12" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="12" r="2.5"/><circle cx="7.76" cy="7.76" r="2"/><circle cx="16.24" cy="16.24" r="2"/><circle cx="7.76" cy="16.24" r="2"/><circle cx="16.24" cy="7.76" r="2"/>'
+    };
+
+    // Initialize animated words
+    const wordContainer = document.getElementById('wordContainer');
+    words.forEach((word, index) => {
+      const span = document.createElement('span');
+      span.className = 'animated-word';
+      span.textContent = word;
+      span.style.animationDelay = `${1 + index * 0.15}s`;
+      wordContainer.appendChild(span);
+    });
+
+    // Initialize reason cards
+    const reasonsGrid = document.getElementById('reasonsGrid');
+    reasons.forEach((reason, index) => {
+      const card = document.createElement('div');
+      card.className = 'reason-card';
+      card.innerHTML = `
+        <div class="reason-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="white" stroke="${icons[reason.icon].includes('line') ? 'white' : 'none'}" stroke-width="2">
+            ${icons[reason.icon]}
+          </svg>
+        </div>
+        <p class="reason-text">${reason.text}</p>
+      `;
+      card.style.transitionDelay = `${index * 0.1}s`;
+      reasonsGrid.appendChild(card);
+    });
+
+    // Scroll to letter
+    function scrollToLetter() {
+      document.getElementById('letterSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Intersection Observer for scroll animations
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // Observe letter card
+    const letterCard = document.querySelector('.letter-card');
+    if (letterCard) {
+      observer.observe(letterCard);
+    }
+
+    // Observe reason cards
+    document.querySelectorAll('.reason-card').forEach(card => {
+      observer.observe(card);
+    });
+
+    // Background Particle System
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let animationId = null;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
+        this.opacity = Math.random() * 0.5 + 0.1;
+        this.color = Math.random() > 0.5 ? '#e54b4b' : '#d4a574';
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, Math.max(0.5, this.size), 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = this.opacity;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      const particleCount = Math.min(80, Math.floor((canvas.width * canvas.height) / 15000));
+      for (let i = 0; i < particleCount; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function drawHearts() {
+      const heartCount = 15;
+      for (let i = 0; i < heartCount; i++) {
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height;
+        const size = Math.random() * 8 + 4;
+        const opacity = Math.random() * 0.15 + 0.05;
+
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.scale(siz
